@@ -94,13 +94,61 @@ body{
 .equal{
     background-color: #e77c18;
 }
+.pin-container{
+    width: 200px;
+    height: 200px;
+    background: #223850;
+    margin: 20px;
+    border-radius: 5px;
+    padding: 20px;
+}
+.otp-screen{
+    margin: auto;
+    width: 150 px;
+    height: 50px;
+    background: rgb(223, 222, 222);
+    border-radius: 5px;
+    color: rgb(19, 19, 19);
+    font-size: 30px;
+    padding: auto;
+}
+.otp-gen-btn{
+    width: 70px;
+    background: #6885A7;
+    height: 70px;
+    margin: auto;
+    margin-top: 30px;
+    border-radius: 50%;
+    border: 2px double white;
+    color: white;
+    font-size: 20px;
+    padding: 15px;
+    cursor: pointer;
+}
+.alert-text{
+    margin: 20px;
+    width: 100%;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 900;
+}
+.alert-text .pinMatched{
+    color: rgb(15, 163, 15);
+    text-shadow: rgb(18, 146, 18) 0px 0px 5px;
+}
+.alert-text .pinUnmatched{
+    color: rgb(255, 1, 1);
+    text-shadow: rgb(128, 29, 29) 0px 0px 5px;
+}
+
+
 </style>
 
 <body>
 <div class="main-container">
+
 <div class="calc-container">
 <div id="input" class="">
-  
   </div>
   
 <div id="buttons-container">
@@ -124,10 +172,23 @@ body{
   <div class="btn btn-num" onclick="insertNum('3')">3</div>
   <div class="btn btn-operator equal" onclick="equalTo()">=</div>
   <div class="btn btn-num zero" onclick="insertNum('0')">0</div>
-  <div class="btn btn-num dot" onclick="insertNum('.')">.</div>
+  <div class="btn btn-num dot" onclick="checkPIN()">Enter</div>
   </div> 
   
 </div>
+
+<div class="pin-container">
+    <div class="otp-screen" id="otp-screen">        
+    </div>
+    <div class="otp-gen-btn" onclick="otpGen()">
+        PIN
+    </div>
+</div>
+
+</div>
+<div class="alert-text">
+    <p class="pinMatched">Pin is matched</p>
+    <p class="pinUnmatched">Pin doesn't matched</p>
 </div>
 
 <script>
@@ -140,7 +201,7 @@ const insertNum = (num) => inputField.textContent += num;
 
 
 //Operation
-const equalTo = () => (inputField.textContent) ? inputField.textContent = eval(inputField.textContent) : false;
+// const equalTo = () => (inputField.textContent) ? inputField.textContent = eval(inputField.textContent) : false;
 
 //using Del button
 
@@ -149,7 +210,31 @@ const eraseNum = () => inputField.textContent = inputField.textContent.slice(0, 
 // Clear all the input
 const clearInput = () => inputField.textContent = '';
 
+//OTP gen
+const otpScreen = document.getElementById('otp-screen');
+const otpGen = () => {otpScreen.textContent = Math.ceil(Math.random()*9999);
+                        inputField.textContent = '';}
 
+        document.querySelector('.pinUnmatched').style.display = "none";
+        document.querySelector('.pinMatched').style.display = "none";
+
+
+        inputField.textContent = '';
+
+function checkPIN(){
+
+    if(otpScreen.textContent == inputField.textContent){
+        inputField.style.background = "green";
+        document.querySelector('.pinMatched').style.display = 'block';
+        document.querySelector('.pinUnmatched').style.display = 'none';
+
+    }else{
+        inputField.style.background = "red"; 
+        document.querySelector('.pinMatched').style.display = 'none';
+        document.querySelector('.pinUnmatched').style.display = 'block';
+
+    }
+}
 
 </script>
 
